@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/main.css"/>
+</head>
+
+<body>
+<div class="container-fluid fixed-top bg-light" id="navContainer">
+    <div class="d-flex justify-content-between navbar-expand-lg navbar-light bg-light text-center p-2">
+        <a class="d-flex navbar-brand text-dark fa fa-book fa-2x" href="">&ensp;Lab2</a>
+        <input class="d-flex form-control w-25" placeholder="author name ..." aria-label="author name ..." id="searchInput">
+        <div class="btn-group">
+            <button class="btn btn-light text-primary  fa fa-book" type="button" data-toggle="collapse"
+                    data-target="#collapseAddBook" aria-expanded="false" aria-controls="collapseAddBook"></button>
+            <button class="btn btn-light text-success fa fa-user-circle-o h-100" type="button" data-toggle="collapse"
+                    data-target="#collapseAddAuthor" aria-expanded="false" aria-controls="collapseAddAuthor"></button>
+        </div>
+    </div>
+    <!--collapse add book-->
+    <div class="collapse" id="collapseAddBook">
+        <form class="container" id="addBookForm">
+            <div class="row">
+                <div class="col-4">
+                    <label class="col-form-label">ISBN</label>
+                    <input type="text" class="form-control isbn" placeholder="isbn">
+                </div>
+                <div class="col-5">
+                    <label class="col-form-label">Title</label>
+                    <input type="text" class="form-control title" placeholder="title">
+                </div>
+                <div class="col-3">
+                    <label class="col-form-label">Author Id</label>
+                    <input type="text" class="form-control author-id" placeholder="autohr id">
+                </div>
+                <div class="col-4">
+                    <label class="col-form-label">Publisher</label>
+                    <input type="text" class="form-control publisher" placeholder="publisher">
+                </div>
+                <div class="col-4">
+                    <label class="col-form-label">Publish Date</label>
+                    <input type="text" class="form-control publish-date" placeholder="publish date">
+                </div>
+                <div class="col-4">
+                    <label class="col-form-label">Price</label>
+                    <input type="text" class="form-control price" placeholder="price">
+                </div>
+                <div class="my-3 mx-auto">
+                    <button type="submit" class="btn btn-outline-secondary addBook fa fa-book"> add book</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <!--collapse add author-->
+    <div class="collapse " id="collapseAddAuthor">
+        <form class="container" id="addAuthorForm">
+            <div class="row">
+                <div class="col-6">
+                    <label class="col-form-label">author id</label>
+                    <input type="text" class="form-control author-id" placeholder="author id">
+                </div>
+                <div class="col-6">
+                    <label class="col-form-label">Name</label>
+                    <input type="text" class="form-control name" placeholder="name">
+                </div>
+                <div class="col-6">
+                    <label class="col-form-label">Age</label>
+                    <input type="text" class="form-control age" placeholder="age">
+                </div>
+                <div class="col-6">
+                    <label class="col-form-label">Country</label>
+                    <input type="text" class="form-control country" placeholder="country">
+                </div>
+                <div class="mx-auto my-3">
+                    <button type='submit' class="btn btn-outline-secondary  fa fa-user-circle-o" id="addAuthor"> add
+                        author
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div id="mainDiv" class="">
+    <!--main container-->
+    <div class="container " id="mainContainer">
+        <div id="books" class="row justify-content-center">
+            <template id="bookTemplate">
+                <div class="col-lg-2 col-md-3 col-sm-4 nopadding bg-light book-div " data-toggle="modal"
+                     data-target="#bookModal"
+                     data-isbn="{{isbn}}"
+                     data-title="{{title}}"
+                     data-name="{{name}}"
+                     data-authorid="{{authorId}}"
+                     data-publisher="{{publisher}}"
+                     data-publishdate="{{publishDate}}"
+                     data-price="{{price}}">
+                    <!--不好看 还是用一样的吧-->
+                    <!--<img class="book-image" src="assert/{{isbn}}.jpg" alt="..." onerror="this.src='assert/about.jpg';">-->
+                    <img class="book-image" src="assert/1.jpg" alt="..." onerror="this.src='assert/book.jpg';">
+                    <h5 class="mt-2 text-truncate">{{title}}</h5>
+                </div>
+            </template>
+        </div>
+    </div>
+</div>
+<!--modal-->
+
+<div class="modal fade" id="bookModal" tabindex="-1" role="dialog" aria-labelledby="bookModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="bookModalLabel"></h5>
+                <template id="authorTemplate">
+                    <small class="text-center">
+                        <span class="text-info">{{name}}</span>
+                        <span class="text-secondary">{{age}}</span>
+                        <span class="text-secondary">{{country}}</span>
+                    </small>
+                </template>
+                <span class="text-success fa fa-spin fa-spinner ml-2 mr-auto" id="authorLoading"></span>
+                <button type="button" class="close fa fa-close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body pb-1">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12">
+                            <label class="col-form-label isbn">ISBN</label>
+                            <input type="text" class="form-control isbn">
+                        </div>
+                        <div class="col-12">
+                            <label class="col-form-label title ">Title</label>
+                            <input type="text" class="form-control title">
+                        </div>
+                        <div class="col-12">
+                            <label class="col-form-label authorId">Author Id</label>
+                            <input type="text" class="form-control authorId">
+                        </div>
+                        <div class="col-12">
+                            <label class="col-form-label publisher">Publisher</label>
+                            <input type="text" class="form-control publisher">
+                        </div>
+                        <div class="col-12">
+                            <label class="col-form-label publishDate">Publish Date</label>
+                            <input type="text" class="form-control publishDate">
+                        </div>
+                        <div class="col-12">
+                            <label class="col-form-label price">Price</label>
+                            <input type="text" class="form-control price">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <!--<div class="col">-->
+                    <button class="btn btn-danger delete fa fa-trash-o" data-dismiss="modal"> delete</button>
+                    <button class="btn btn-info update fa fa-save " data-dismiss="modal"> update</button>
+                    <button class="btn btn-secondary fa fa-ban" data-dismiss="modal"> cancel</button>
+                </div>
+                <!--</div>-->
+            </div>
+        </div>
+    </div>
+</div>
+<div class="alert alert-light text-primary" role="alert" id="addBookSuccess">add book success</div>
+<div class="alert alert-light text-danger" role="alert" id="addBookError">add book error</div>
+<div class="alert alert-light text-info" role="alert" id="updateBookSuccess">update book success</div>
+<div class="alert alert-light text-danger" role="alert" id="updateBookError">update book error</div>
+<div class="alert alert-light text-info" role="alert" id="deleteBookSuccess">delete book success</div>
+<div class="alert alert-light text-danger" role="alert" id="deleteBookError">delete book error</div>
+<div class="alert alert-light text-info" role="alert" id="addAuthorSuccess">add author success</div>
+<div class="alert alert-light text-danger" role="alert" id="addAuthorError">add author error</div>
+<div class="alert alert-light text-danger" role="alert" id="loadBookError">load book error</div>
+<div class="alert alert-light text-danger" role="alert" id="loadAuthorError">load author error</div>
+<script src="js/jquery.min.js"></script>
+<script src="js/main.js"></script>
+<script src="js/popper.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/mustache.min.js"></script>
+</body>
+</html>
+
